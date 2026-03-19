@@ -151,7 +151,7 @@ def read_data(comm, fname: str, keys: list[str], parallel_io: bool = False, dtyp
 
     return data 
 
-def write_data(comm, fname: str, data_dict: dict[str, np.ndarray], parallel_io: bool = False, dtype = np.single, msh: Union[Mesh, list[np.ndarray]] = None, write_mesh:bool=False, distributed_axis: int = 0, uniform_shape: bool = False):
+def write_data(comm, fname: str, data_dict: dict[str, np.ndarray], parallel_io: bool = False, dtype = np.single, msh: Union[Mesh, list[np.ndarray]] = None, write_mesh:bool=False, fname_of_mesh_file: str = None, distributed_axis: int = 0, uniform_shape: bool = False):
     """
     Write data to a file
 
@@ -170,6 +170,8 @@ def write_data(comm, fname: str, data_dict: dict[str, np.ndarray], parallel_io: 
         The mesh object to write to a fld file, by default None
     write_mesh : bool, optional
         Only valid for writing fld files
+    fname_of_mesh_file : str, optional
+        The name of the file containing the mesh to be linked - This is necessary only for vtkhdf
     distributed_axis : int, optional
         The axis along which the data is distributed, by default 0
     uniform_shape : bool, optional
@@ -224,7 +226,12 @@ def write_data(comm, fname: str, data_dict: dict[str, np.ndarray], parallel_io: 
             raise ValueError("A mesh object must be provided to write a vtkhdf file")
         
         file = VTKHDFFile(comm, fname, "w", parallel_io)
-        file.write_mesh_data(msh[0], msh[1], msh[2], distributed_axis=distributed_axis)
+        if write_mesh:
+            file.write_mesh_data(msh[0], msh[1], msh[2], distributed_axis=distributed_axis)
+        elif fname_of_mesh_file is not None:
+            file.link_to_existing_mesh(fname_of_mesh_file)
+        else:
+            raise ValueError("For a vtkhdf, you need to write the mesh or link to an existing one. Select write_mesh=True or provide the fname_of_mesh_file")
 
         for key in data_dict.keys():
             file.write_point_data(key, data_dict[key].astype(dtype), distributed_axis=distributed_axis)
