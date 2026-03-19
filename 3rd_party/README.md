@@ -15,6 +15,7 @@ To configure the dependencies use the following command (Select `OFF` or remove 
 cmake -S . -B build-superbuild \
   -DCMAKE_C_COMPILER=$(which mpicc) \
   -DCMAKE_CXX_COMPILER=$(which mpicxx) \
+  -DCMAKE_Fortran_COMPILER=$(which mpifort) \
   -DPYTHON_EXECUTABLE=$(which python3) \
   -DINSTALL_MPI4PY=ON \
   -DMPI4PY_VERSION=4.1.1 \
