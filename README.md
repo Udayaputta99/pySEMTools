@@ -17,7 +17,7 @@ The most prominent features of the packages are the following:
 If you wish to **contribute** to PySEMTools, need assistance or to report a bug, please check `CONTRIBUTING.md` for the community guidelines on the best way to do it.
 
 In case you find the tools useful, please cite as:
-* Perez, A., Toosi, S., Olsen, T.F., Markidis, S., Schlatter, P., 2025. Pysemtools: A library for post-processing hexahedral spectral element data. [https://doi.org/10.48550/arXiv.2504.12301](https://doi.org/10.48550/arXiv.2504.12301)
+* Perez, A., Toosi, S., Olsen, T.F., Markidis, S., Schlatter, P., 2025. Pysemtools: A library for post-processing hexahedral spectral element data. [https://doi.org/10.21105/joss.08767](https://doi.org/10.21105/joss.08767)
 
 The work was partially funded by the “Adaptive multi-tier intelligent data manager for Exascale (ADMIRE)” project,
 which is funded by the European Union’s Horizon 2020 JTI-EuroHPC research and innovation program under grant
