@@ -173,7 +173,7 @@ def do_dssum_on_3comp_vector(dU_dxi, msh_conn, msh):
 ###########################################################################################
 
 #%% convert 2D statistics to 3D
-def convert_2Dstats_to_3D(stats2D_filename,stats3D_filename,datatype='single'):
+def convert_2Dstats_to_3D(stats2D_filename,stats3D_filename,stats2D_meshname=None,datatype='single'):
     from mpi4py import MPI 
     import numpy as np
     import warnings
@@ -198,8 +198,12 @@ def convert_2Dstats_to_3D(stats2D_filename,stats3D_filename,datatype='single'):
         data_type = np.double
         wdsz = 8
 
+    if stats2D_meshname==None:
+        stats2D_meshname = stats2D_filename
+
     # read mesh and fields
-    pynekread(stats2D_filename, comm, data_dtype=data_type, msh=msh, fld=fld)
+    pynekread(stats2D_meshname, comm, data_dtype=data_type, msh=msh)
+    pynekread(stats2D_filename, comm, data_dtype=data_type, fld=fld)
 
     # get the 
     field_names = return_list_of_vars_from_filename(stats2D_filename)
