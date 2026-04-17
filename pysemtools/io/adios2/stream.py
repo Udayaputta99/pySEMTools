@@ -63,7 +63,7 @@ class DataStreamer:
     >>> ds.stream(x.reshape(x.size))
     """
 
-    def __init__(self, comm, from_nek=True):
+    def __init__(self, comm, from_nek=True, timeout_seconds = 300):
 
         # Adios status
         self.okstep = adios2.StepStatus.OK
@@ -74,6 +74,8 @@ class DataStreamer:
         # ADIOS IO - Engine
         self.io_asynchronous = self.adios.DeclareIO("streamIO")
         self.io_asynchronous.SetEngine("SST")
+        self.io_asynchronous.SetParameters({"OpenTimeoutSecs": str(timeout_seconds)})
+
 
         # Open the streams
         self.reader_st = self.io_asynchronous.Open(
